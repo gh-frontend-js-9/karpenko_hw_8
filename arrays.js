@@ -185,3 +185,144 @@ arrays.letterCounter = (arr, letter) => {
     return arr.reduce((xi,x)=>xi.concat(x),[])
         .filter(x=>x === letter).length;
 }
+arrays.tidyBooks = (...books) => {
+    return books.map((book,index) => 
+        book[0].trim().split("-")
+        .map(x => x.trim())
+    )
+}
+arrays.partiallyHide = (str) => {
+    return str.replace(/\B\w\B/g, "-");
+}
+arrays.magnitude = (arr) => {
+    // return arr.hypot()
+    return Math.sqrt(
+        arr.map(x => x * x)
+            .reduce((accumulator, value) => accumulator + value , 0)
+    )
+}
+
+// Right-, -Left Shift
+arrays.leftShift = (arr, num) => {
+    const { length } = arr
+    const cut = num % num
+    return arr.slice(cut).concat(arr.slice(0, cut))
+}
+arrays.rightShift = (arr, num) => {
+    const { length } = arr
+    const cut = length - (num % length)
+    return arr.slice(cut).concat(arr.slice(0, cut))
+}
+
+arrays.subset = (set1, set2) => {
+    return set1.every(num => set2.includes(num))
+}
+arrays.mergeArrays = (a, b) => {
+    let arr = [];
+    for (let i = 0; i < a.concat(b).length; i++) {
+      if(a[i]) arr.push(a[i]);
+      if(b[i]) arr.push(b[i]);
+    }
+    return arr;
+}
+
+const convert = (month_number) => {
+    const month_name = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    month_number = typeof month_number == 'number'? +month_number : false;
+    return month_name[month_number]
+}
+
+arrays.zodiacSymbol = (str) => {
+    const SYMBOLS = ["♈", "♉", "♊", "♋", "♌", "♍",
+								 "♎", "♏", "♐", "♑", "♒", "♓"];
+	const day = new Date(str).getDate()
+	const month = new Date(str).getMonth() + 1
+	switch (month) {
+		case 3:
+			if (day >= 21) return SYMBOLS[0]
+			else return SYMBOLS[11]
+		case 4:
+			if (day >= 21) return SYMBOLS[1]
+			else return SYMBOLS[0]
+		case 5:
+			if (day >= 22) return SYMBOLS[2]
+			else return SYMBOLS[1]
+		case 6:
+			if (day >= 22) return SYMBOLS[3]
+			else return SYMBOLS[2]
+		case 7:
+			if (day >= 23) return SYMBOLS[4]
+			else return SYMBOLS[3]
+		case 8:
+			if (day >= 23) return SYMBOLS[5]
+			else return SYMBOLS[4]
+		case 9:
+			if (day >= 24) return SYMBOLS[6]
+			else return SYMBOLS[5]
+		case 10:
+			if (day >= 24) return SYMBOLS[7]
+			else return SYMBOLS[6]
+		case 11:
+			if (day >= 23) return SYMBOLS[8]
+			else return SYMBOLS[7]
+		case 12:
+			if (day >= 22) return SYMBOLS[9]
+			else return SYMBOLS[8]
+		case 1:
+			if (day >= 21) return SYMBOLS[10]
+			else return SYMBOLS[9]
+		case 2:
+			if (day >= 20) return SYMBOLS[11]
+			else return SYMBOLS[10]
+	}
+}
+
+Array.prototype.replace = function(t, v) {
+    if (this.indexOf(t)!= -1)
+        this[this.map((e, i) => [i, e]).filter(e => e[1] == t)[0][0]] = v;
+};
+// No pass test
+arrays.nearestElement = (arr, compare_number) => {
+    let resoult = []
+    resoult.push(Math.min(...arr.filter(x => x > compare_number)))
+    resoult.push(Math.max(...arr.filter(x => x < compare_number)))
+
+    resoult.replace(Infinity, 0)
+    resoult.replace(-Infinity, 0)
+
+    return Math.min(...resoult)
+}
+
+arrays.miniPeaks = (arr) => {
+    return arr.filter((value,index,array) =>
+        value > array[index - 1] && 
+        value > array[index + 1])
+}
+
+arrays.pointsInCircle = (points,centerX, centerY, radius ) => {
+    return points.filter(point => {
+        return Math.hypot(point.x - centerX, point.y - centerY) < radius;
+    }).length;
+}
+
+arrays.rangedReversal = (arr, start, end) => {
+    let prev = arr.slice(0, start)
+    let reserved = arr.slice(start, end + 1).reverse()
+    let next = arr.slice(end + 1)
+    return [...prev, ...reserved, ...next]
+}
+arrays.schoty = frame => {
+    return +frame.map(x => x.indexOf("-")).join("")
+}
+arrays.accumulatingArray = (arr) => {
+    let sum = 0
+    return arr.map(value => (sum += value))
+}
+arrays.getStudentTopNotes = (students) => {
+    // let resoult = []
+    // students.map(value => {
+    //     resoult.push(Math.max(...value.notes))
+    // })
+    // return resoult
+    return students.map(x => Math.max(...x.notes, 0))
+}
