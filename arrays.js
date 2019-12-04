@@ -326,3 +326,10 @@ arrays.getStudentTopNotes = (students) => {
     // return resoult
     return students.map(x => Math.max(...x.notes, 0))
 }
+arrays.partition = (str, separator) => {
+    let copy = [...str]
+    let arr = []
+    while(copy.length > 0)
+        arr.push(copy.splice(0, separator).join(''))    
+    return arr
+}
